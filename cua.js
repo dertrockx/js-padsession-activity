@@ -7,9 +7,11 @@ const getPokemonTypesAsync = async () => {
   // NOTE: don't forget to use a try-catch block
 
   try {
-    let types = await axios.get("https://pokeapi.co/api/v2/type/")
-    let get_data = types.data.results
+    const types = await axios.get("https://pokeapi.co/api/v2/type/")
+    const get_data = types.data.results
 
+    console.log("----- TASK 1: async-await -----")
+    
     for (let index in get_data) {
       console.log(get_data[index].name)
     }
@@ -21,7 +23,27 @@ const getPokemonTypesAsync = async () => {
 };
 
 // TODO: promise-then form of getPokemonTypes()
-const getPokemonTypesPromise = () => {};
+const getPokemonTypesPromise = () => {
+  const promise = new Promise(function (resolve, reject) {
+    resolve(axios.get("https://pokeapi.co/api/v2/type/"))
+  })
+
+  promise
+    .then(types => {
+      const get_data = types.data.results
+
+      console.log("----- TASK 1: promise-then -----")
+
+      for (let index in get_data) {
+        console.log(get_data[index].name)
+      }
+
+    })
+
+    .catch(err => {
+      console.log(err)
+    })
+};
 
 
 // TODO: async-await form of getPokemonInfo()
@@ -34,3 +56,4 @@ const getPokemonInfoAsync = () => {
 const getPokemonInfoPromise = () => {};
 
 getPokemonTypesAsync();
+getPokemonTypesPromise();
